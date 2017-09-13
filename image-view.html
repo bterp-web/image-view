@@ -1,0 +1,76 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../img-pan-zoom/img-pan-zoom.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+<!--
+`image-view`
+Image viewer to allow zoom, rotate
+
+@demo demo/index.html
+-->
+
+<dom-module id="image-view">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+
+      .mirrored {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+      }
+
+      img-pan-zoom {
+        padding: 1em;
+      }
+    </style>
+    <h2>Image Viewer</h2>
+      <paper-icon-button icon="icons:zoom-in" on-tap="zoomIn">Zoom In</paper-icon-button>
+      <paper-icon-button icon="icons:zoom-out" on-tap="zoomOut">Zoom Out</paper-icon-button>
+      <paper-icon-button icon="image:rotate-right" on-tap="rotateRight">Rotate Right</paper-icon-button>
+      <paper-icon-button icon="image:rotate-left" on-tap="rotateLeft">Rotate Left</paper-icon-button>
+    <img-pan-zoom id="img" src="img/background.jpg"></img-pan-zoom>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'image-view',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'image-view',
+        },
+        degrees: {
+          type: Number,
+          value: 0
+        },
+      },
+      rotateRight: function () {
+        var img = this.$$('#img');
+        var degrees = this.degrees += 90;
+
+        img.style.webkitTransform = "rotate(" + degrees + "deg)";
+      },
+      rotateLeft: function () {
+        var img = this.$$('#img');
+        var degrees = this.degrees += -90;
+
+        img.style.webkitTransform = "rotate(" + degrees + "deg)";
+      },
+      zoomIn: function () {
+        this.$$('#img').zoomIn();
+      },
+      zoomOut: function () {
+        this.$$('#img').zoomOut();
+      },
+
+    });
+  </script>
+</dom-module>
